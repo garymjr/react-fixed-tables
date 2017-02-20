@@ -5,6 +5,7 @@ export class FixedTableFooter extends React.Component {
         let totals = [];
         let data = this.props.data;
 
+        let i = 0;
         this.props.cols.forEach(col => {
             let footerStyle = {
                 backgroundColor: '#f6f7f8',
@@ -20,13 +21,14 @@ export class FixedTableFooter extends React.Component {
 
             if (col.props.showTotals) {
                 let total = 0;
-                for (let i = 0; i < data.getSize(); i++) {
-                    total += parseFloat(data.getObjectAt(i)[col.props.col]);
+                for (let j = 0; j < data.getSize(); j++) {
+                    total += parseFloat(data.getObjectAt(j)[col.props.col]);
                 }
-                totals.push(<td style={footerStyle}>{parseFloat(total.toString()).toFixed(2)}</td>);
+                totals.push(<td key={i} style={footerStyle}>{parseFloat(total.toString()).toFixed(2)}</td>);
             } else {
-                totals.push(<td style={footerStyle}>{''}</td>);
+                totals.push(<td key={i} style={footerStyle}>{''}</td>);
             }
+            i++;
         });
         return totals;
     }

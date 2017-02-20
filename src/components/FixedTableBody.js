@@ -49,9 +49,11 @@ export class FixedTableBody extends React.Component {
 
         for (let i = 0; i < this.props.data.getSize(); i++) {
             let row = [];
+            let j = 0;
             this.props.cols.forEach(c => {
                 const Cell = c.props.cell;
-                row.push(<Cell align={c.props.align} data={this.props.data.getObjectAt(i)[c.props.col]} width={c.props.width} />);
+                row.push(<Cell align={c.props.align} data={this.props.data.getObjectAt(i)[c.props.col]} key={j} width={c.props.width} />);
+                j++;
             });
 
             if (i % 2 !== 0) {
@@ -60,7 +62,7 @@ export class FixedTableBody extends React.Component {
                 rowBg = '#fff';
             }
 
-            rows.push(<tr className="fixedTableRow" style={{ backgroundColor: rowBg, height: this.props.rowHeight }}>{row}</tr>);
+            rows.push(<tr className="fixedTableRow" key={i} style={{ backgroundColor: rowBg, height: this.props.rowHeight }}>{row}</tr>);
         }
         return rows;
     }
