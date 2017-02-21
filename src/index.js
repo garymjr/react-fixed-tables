@@ -4,7 +4,11 @@ import { FixedTableCell } from "./components/FixedTableCell";
 
 export class DataStore {
     constructor(data) {
-        this._data = data;
+        if (data) {
+            this._data = data;
+        } else {
+            this._data = [];
+        }
     }
 
     getSize() {
@@ -25,17 +29,36 @@ export class DataStore {
     sortBy(key, reversed = false, isNum = false) {
         let sortedData = this._data.slice();
         sortedData.sort((objA, objB) => {
-            let valueA = isNum ? parseFloat(objA[key]) : objA[key];
-            let valueB = isNum ? parseFloat(objB[key]) : objB[key];
-            let sortVal = 0;
-            if (valueA > valueB) {
-                sortVal = 1;
-            }
-            if (valueA < valueB) {
-                sortVal = -1;
-            }
-            if (sortVal !== 0 && reversed === true) {
-                sortVal = sortVal * -1;
+            let sortVal;
+            if (typeof key === "object") {
+                for (let i = 0; i < key.length; i++) {
+                    sortVal = 0;
+                    let valueA = isNum ? parseFloat(objA[key[i]]) : objA[key[i]];
+                    let valueB = isNum ? parseFloat(objB[key[i]]) : objB[key[i]];
+                    if (valueA > valueB) {
+                        sortVal = 1;
+                    }
+                    if (valueA < valueB) {
+                        sortVal = -1;
+                    }
+                    if (i === 0 && (sortVal !== 0 && reversed === true)) {
+                        sortVal = sortVal * -1;
+                    }
+                    if (sortVal !== 0) break;
+                }
+            } else {
+                sortVal = 0;
+                let valueA = isNum ? parseFloat(objA[key]) : objA[key];
+                let valueB = isNum ? parseFloat(objB[key]) : objB[key];
+                if (valueA > valueB) {
+                    sortVal = 1;
+                }
+                if (valueA < valueB) {
+                    sortVal = -1;
+                }
+                if (sortVal !== 0 && reversed === true) {
+                    sortVal = sortVal * -1;
+                }
             }
             return sortVal;
         });
