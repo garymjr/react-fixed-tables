@@ -19,7 +19,7 @@ export class FixedTableBody extends React.Component {
             let j = 0;
             this.props.cols.forEach(c => {
                 const Cell = c.props.cell;
-                row.push(<Cell align={c.props.align} data={this.props.data.getObjectAt(i)[c.props.col]} key={j} width={c.props.width} />);
+                row.push(<Cell align={c.props.align} col={c.props.col} data={this.props.data} key={j} rowIndex={i} width={c.props.width} />);
                 j++;
             });
 
@@ -37,7 +37,9 @@ export class FixedTableBody extends React.Component {
     render() {
         const loading = () => {
             if (this.props.data.getSize() === 0) {
-                return <td colSpan={this.props.cols.length}>Loading Data...</td>;
+                return (
+                    <tr><td colSpan={this.props.cols.length}>Loading Data...</td></tr>
+                );
             } else {
                 return;
             }
