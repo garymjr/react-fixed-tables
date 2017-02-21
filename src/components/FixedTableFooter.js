@@ -19,12 +19,10 @@ export class FixedTableFooter extends React.Component {
                 width: col.props.width
             }
 
-            if (col.props.showTotals) {
-                let total = 0;
-                for (let j = 0; j < data.getSize(); j++) {
-                    total += parseFloat(data.getObjectAt(j)[col.props.col]);
-                }
-                totals.push(<td key={i} style={footerStyle}>{parseFloat(total.toString()).toFixed(2)}</td>);
+            if (col.props.totalCell) {
+                const Cell = col.props.totalCell;
+                const total = (<Cell align={col.props.align} col={col.props.col} data={this.props.data} key={i} style={footerStyle} width={col.props.width} />);
+                totals.push(total);
             } else {
                 totals.push(<td key={i} style={footerStyle}>{''}</td>);
             }

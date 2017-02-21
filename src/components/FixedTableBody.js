@@ -1,13 +1,12 @@
 import React from "react";
+import $ from "jquery";
 
 export class FixedTableBody extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            deltaY: 0,
-            maxY: -((35 * this.props.rowCount) - this.props.height),
             mouseOver: false,
-            rows: []
+            rowCount: 0
         }
 
         window.addEventListener('mousewheel', this.handleScroll.bind(this));
@@ -32,14 +31,20 @@ export class FixedTableBody extends React.Component {
 
     handleScroll(event) {
         if (this.state.mouseOver) {
-            let deltaY = (this.state.deltaY + event.deltaY);
+            event.preventDefault();
+            const body = $(".fixedTableBody");
+            let transformY = body.css('transform').split(',')[5];
+            let maxY = -((this.props.rowCount * this.props.rowHeight) - (this.props.height));
+            transformY = transformY.slice(0, -1);
+
+            let deltaY = parseInt(transformY - event.deltaY);
             if (deltaY >= 0) {
                 deltaY = 0;
-            } else if (deltaY <= this.state.maxY) {
-                deltaY = this.state.maxY;
+            } else if (deltaY <= maxY) {
+                deltaY = maxY;
             }
 
-            this.setState({ deltaY: deltaY });
+            body.css("transform", `translate3d(0px, ${deltaY}px, 0px)`);
         }
     }
 
@@ -76,10 +81,10 @@ export class FixedTableBody extends React.Component {
                 <table className="fixedTableBody" style={{
                     borderCollapse: 'collapse',
                     tableLayout: 'fixed',
-                    transform: `translate3d(0px, ${this.state.deltaY}px, 0px)`,
+                    transform: 'translate3d(0px, 0px, 0px)',
                     width: "100%"
                 }}>
-                    <tbody>
+                    <tbody style={{ whiteSpace: 'nowrap' }}>
                         {this.collectRows()}
                     </tbody>
                 </table>
