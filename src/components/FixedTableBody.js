@@ -1,50 +1,12 @@
 import React from "react";
 import $ from "jquery";
+import { Scrollbars } from "react-custom-scrollbars";
 
 export class FixedTableBody extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mouseOver: false,
             rowCount: 0
-        }
-
-        window.addEventListener('mousewheel', this.handleScroll.bind(this));
-    }
-
-    componentDidMount() {
-        let self = this;
-
-        const fixedTableBody = document.querySelector('.fixedTableBody');
-        fixedTableBody.addEventListener('mouseenter', () => {
-            self.setState({ mouseOver: true });
-        });
-        fixedTableBody.addEventListener('mouseleave', () => {
-            self.setState({ mouseOver: false });
-        });
-    }
-
-    componentWillUnmount() {
-        const fixedTableBody = document.querySelector('.fixedTableBody');
-        window.removeEventListener('mousewheel', this.handleScroll);
-    }
-
-    handleScroll(event) {
-        if (this.state.mouseOver) {
-            event.preventDefault();
-            const body = $(".fixedTableBody");
-            let transformY = body.css('transform').split(',')[5];
-            let maxY = -((this.props.rowCount * this.props.rowHeight) - (this.props.height));
-            transformY = transformY.slice(0, -1);
-
-            let deltaY = parseInt(transformY - event.deltaY);
-            if (deltaY >= 0) {
-                deltaY = 0;
-            } else if (deltaY <= maxY) {
-                deltaY = maxY;
-            }
-
-            body.css("transform", `translate3d(0px, ${deltaY}px, 0px)`);
         }
     }
 
@@ -73,23 +35,30 @@ export class FixedTableBody extends React.Component {
     }
 
     render() {
+        const loading = () => {
+            if (this.props.data.getSize() === 0) {
+                return <td colSpan={this.props.cols.length}>Loading Data...</td>;
+            } else {
+                return;
+            }
+        };
+
         return (
-            <div className="fixedTableBodyContainer" style={{
-                height: this.props.height,
-                overflowY: 'hidden'
-            }}>
-                <table className="fixedTableBody" style={{
-                    border: '1px solid #d3d3d3',
-                    borderCollapse: 'collapse',
-                    tableLayout: 'fixed',
-                    transform: 'translate3d(0px, 0px, 0px)',
-                    width: "100%"
-                }}>
-                    <tbody style={{ whiteSpace: 'nowrap' }}>
-                        {this.collectRows()}
-                    </tbody>
-                </table>
-            </div>
+            <Scrollbars style={{ width: "100%", height: this.props.height }}>
+                <div className="fixedTableBodyContainer">
+                    <table className="fixedTableBody" style={{
+                        border: '1px solid #d3d3d3',
+                        borderCollapse: 'collapse',
+                        tableLayout: 'fixed',
+                        width: "100%"
+                    }}>
+                        <tbody style={{ whiteSpace: 'nowrap' }}>
+                            {loading()}
+                            {this.collectRows()}
+                        </tbody>
+                    </table>
+                </div>
+            </Scrollbars>
         );
     }
 }
