@@ -5,6 +5,7 @@ export class FixedTableHeader extends React.Component {
         return (
             <div className="fixedTableHeaderContainer">
                 <table className="fixedTableHeader" style={{
+                    border: '1px solid #d3d3d3',
                     borderCollapse: 'collapse',
                     height: this.props.height,
                     tableLayout: 'fixed',

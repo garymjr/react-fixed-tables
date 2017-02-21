@@ -7,7 +7,6 @@ export class FixedTable extends React.Component {
     render() {
         return (
             <div className="fixedTableContainer" style={{
-                border: '1px solid #d3d3d3',
                 height: this.props.height,
                 width: this.props.width
             }}>

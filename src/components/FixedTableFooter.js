@@ -35,6 +35,7 @@ export class FixedTableFooter extends React.Component {
         return (
             <div className="fixedTableFooterContainer">
                 <table className="FixedTableFooter" style={{
+                    border: '1px solid #d3d3d3',
                     borderCollapse: 'collapse',
                     height: this.props.height,
                     tableLayout: 'fixed',

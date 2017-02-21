@@ -79,6 +79,7 @@ export class FixedTableBody extends React.Component {
                 overflowY: 'hidden'
             }}>
                 <table className="fixedTableBody" style={{
+                    border: '1px solid #d3d3d3',
                     borderCollapse: 'collapse',
                     tableLayout: 'fixed',
                     transform: 'translate3d(0px, 0px, 0px)',
