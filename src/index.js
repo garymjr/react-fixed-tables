@@ -92,17 +92,36 @@ export class DataListWrapper {
     sortBy(key, reversed = false, isNum = false) {
         let sortedIndexMap = this._indexMap.slice();
         sortedIndexMap.sort((indexA, indexB) => {
-            let valueA = isNum ? parseFloat(this._data[indexA][key]) : this._data[indexA][key];
-            let valueB = isNum ? parseFloat(this._data[indexB][key]) : this._data[indexB][key];
-            let sortVal = 0;
-            if (valueA > valueB) {
-                sortVal = 1;
-            }
-            if (valueA < valueB) {
-                sortVal = -1;
-            }
-            if (sortVal !== 0 && reversed === true) {
-                sortVal = sortVal * -1;
+            let sortVal;
+            if (typeof key === "object") {
+                for (let i = 0; i < key.length; i++) {
+                    sortVal = 0;
+                    let valueA = isNum ? parseFloat(this._data[indexA][key]) : this._data[indexA][key];
+                    let valueB = isNum ? parseFloat(this._data[indexB][key]) : this._data[indexB][key];
+                    if (valueA > valueB) {
+                        sortVal = 1;
+                    }
+                    if (valueA < valueB) {
+                        sortVal = -1;
+                    }
+                    if (i === 0 && (sortVal !== 0 && reversed === true)) {
+                        sortVal = sortVal * -1;
+                    }
+                    if (sortVal !== 0) break;
+                }
+            } else {
+                sortVal = 0;
+                let valueA = isNum ? parseFloat(this._data[indexA][key]) : this._data[indexA][key];
+                let valueB = isNum ? parseFloat(this._data[indexB][key]) : this._data[indexB][key];
+                if (valueA > valueB) {
+                    sortVal = 1;
+                }
+                if (valueA < valueB) {
+                    sortVal = -1;
+                }
+                if (sortVal !== 0 && reversed === true) {
+                    sortVal = sortVal * -1;
+                }
             }
             return sortVal;
         });
