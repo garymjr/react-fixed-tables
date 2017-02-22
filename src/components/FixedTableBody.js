@@ -3,13 +3,6 @@ import $ from "jquery";
 import { Scrollbars } from "react-custom-scrollbars";
 
 export class FixedTableBody extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            rowCount: 0
-        }
-    }
-
     collectRows() {
         let rows = [];
         let rowBg;
@@ -36,13 +29,16 @@ export class FixedTableBody extends React.Component {
 
     render() {
         const loading = () => {
-            if (this.props.data.getSize() === 0) {
+            if (this.props.rowCount === 0 && this.props.data.getSize() === 0) {
                 return (
                     <tr><td colSpan={this.props.cols.length}>Loading Data...</td></tr>
                 );
-            } else {
-                return;
+            } else if (this.props.data.getSize() === 0) {
+                return (
+                    <tr><td colSpan={this.props.cols.length}>No results</td></tr>
+                );
             }
+            return;
         };
 
         return (

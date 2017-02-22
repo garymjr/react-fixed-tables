@@ -83,7 +83,9 @@ export class DataListWrapper {
 
     getAll() {
         let data = [];
-        this._indexMap.forEach(index => data.push(this.getObjectAt(index)));
+        for (let i = 0; i < this.getSize(); i++) {
+            data.push(this.getObjectAt(i));
+        }
         return data;
     }
 
