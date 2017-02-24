@@ -4,6 +4,15 @@ import { FixedTableFooter } from './FixedTableFooter'
 import { FixedTableHeader } from './FixedTableHeader'
 
 export class FixedTable extends React.Component {
+  renderHeaders () {
+    let headers = []
+    React.Children.forEach(this.props.children, child => {
+      let Header = child.type
+      headers.push(<Header height={this.props.rowHeight} {...child.props} />)
+    })
+    return headers
+  }
+
   render () {
     return (
       <div className='fixedTableContainer' style={{
@@ -11,7 +20,7 @@ export class FixedTable extends React.Component {
         width: this.props.width
       }}>
         <FixedTableHeader height={this.props.rowHeight}>
-          {this.props.children}
+          {this.renderHeaders()}
         </FixedTableHeader>
         <FixedTableBody
           cols={this.props.children}

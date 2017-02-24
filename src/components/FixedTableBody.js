@@ -45,7 +45,7 @@ export class FixedTableBody extends React.Component {
             tableLayout: 'fixed',
             width: '100%'
           }}>
-            <tbody style={{ whiteSpace: 'nowrap' }}>
+            <tbody>
               {loading()}
               {this.collectRows()}
             </tbody>

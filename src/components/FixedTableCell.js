@@ -8,7 +8,6 @@ export class FixedTableCell extends React.Component {
         borderRight: '1px solid #d3d3d3',
         borderBottom: '1px solid #d3d3d3',
         fontSize: '12px',
-        overflow: 'hidden',
         width: this.props.width,
         ...this.props.style
       }}>{this.props.data}</td>
