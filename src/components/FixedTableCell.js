@@ -2,6 +2,7 @@ import React from 'react'
 
 export class FixedTableCell extends React.Component {
   render () {
+    const events = this.props.events ? this.props.events : {}
     return (
       <td className='fixedTableCell' style={{
         textAlign: this.props.align,
@@ -10,7 +11,7 @@ export class FixedTableCell extends React.Component {
         fontSize: '12px',
         width: this.props.width,
         ...this.props.style
-      }}>{this.props.data}</td>
+      }} {...events}>{this.props.data}</td>
     )
   }
 }

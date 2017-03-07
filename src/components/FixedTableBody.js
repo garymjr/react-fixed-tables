@@ -29,9 +29,13 @@ export class FixedTableBody extends React.Component {
   render () {
     const loading = () => {
       if (this.props.rowCount === 0 && this.props.data.getSize() === 0) {
-        return (<tr><td colSpan={this.props.cols.length}>Loading Data...</td></tr>)
+        return (
+          <tr><td colSpan={this.props.cols.length}>Loading Data...</td></tr>
+        )
       } else if (this.props.data.getSize() === 0) {
-        return (<tr><td colSpan={this.props.cols.length}>No results</td></tr>)
+        return (
+          <tr><td colSpan={this.props.cols.length}>No results</td></tr>
+        )
       }
       return
     }

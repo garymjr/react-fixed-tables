@@ -6,9 +6,11 @@ import { FixedTableHeader } from './FixedTableHeader'
 export class FixedTable extends React.Component {
   renderHeaders () {
     let headers = []
+    let key = 0
     React.Children.forEach(this.props.children, child => {
       let Header = child.type
-      headers.push(<Header height={this.props.rowHeight} {...child.props} />)
+      headers.push(<Header key={key} height={this.props.rowHeight} {...child.props} />)
+      key++
     })
     return headers
   }
