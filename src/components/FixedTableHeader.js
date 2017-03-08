@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 export class FixedTableHeader extends React.Component {
   render () {
@@ -20,4 +20,8 @@ export class FixedTableHeader extends React.Component {
       </div>
     )
   }
+}
+
+FixedTableHeader.propTypes = {
+  height: PropTypes.string.isRequired
 }

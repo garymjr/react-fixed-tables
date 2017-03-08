@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 
 export class FixedTableBody extends React.Component {
@@ -6,12 +6,28 @@ export class FixedTableBody extends React.Component {
     let rows = []
     let rowBg
 
-    for (let i = 0; i < this.props.data.getSize(); i++) {
+    for (let i = 0; i < this.props.rowCount; i++) {
+      let Cell = null
       let row = []
       let j = 0
+
       this.props.cols.forEach(c => {
-        const Cell = c.props.cell
-        row.push(<Cell align={c.props.align} col={c.props.col} data={this.props.data} key={j} rowIndex={i} width={c.props.width} />)
+        let cellProps = {
+          align: c.props.align,
+          col: c.props.col,
+          key: j,
+          rowIndex: i,
+          width: c.props.width,
+          ...c.props.cell.props
+        }
+
+        if (React.isValidElement(c.props.cell)) {
+          Cell = React.cloneElement(c.props.cell, cellProps)
+        } else {
+          cellProps.data = this.props.data
+          Cell = c.props.cell(cellProps)
+        }
+        row.push(Cell)
         j++
       })
 
@@ -28,16 +44,9 @@ export class FixedTableBody extends React.Component {
 
   render () {
     const loading = () => {
-      if (this.props.rowCount === 0 && this.props.data.getSize() === 0) {
-        return (
-          <tr><td colSpan={this.props.cols.length}>Loading Data...</td></tr>
-        )
-      } else if (this.props.data.getSize() === 0) {
-        return (
-          <tr><td colSpan={this.props.cols.length}>No results</td></tr>
-        )
+      if (this.props.rowCount === 0) {
+        return <tr><td colSpan={this.props.cols.length}>Loading Data...</td></tr>
       }
-      return
     }
 
     return (
@@ -58,4 +67,12 @@ export class FixedTableBody extends React.Component {
       </Scrollbars>
     )
   }
+}
+
+FixedTableBody.propTypes = {
+  cols: PropTypes.array.isRequired,
+  data: PropTypes.object,
+  height: PropTypes.number.isRequired,
+  rowCount: PropTypes.number.isRequired,
+  rowHeight: PropTypes.number.isRequired
 }

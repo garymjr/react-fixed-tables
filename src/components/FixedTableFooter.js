@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 export class FixedTableFooter extends React.Component {
   renderTotals () {
@@ -49,4 +49,10 @@ export class FixedTableFooter extends React.Component {
       </div>
     )
   }
+}
+
+FixedTableFooter.propTypes = {
+  cols: PropTypes.array,
+  data: PropTypes.object,
+  height: PropTypes.string.isRequired
 }

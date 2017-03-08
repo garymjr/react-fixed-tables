@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 export class FixedTableColumn extends React.Component {
   render () {
@@ -17,4 +17,19 @@ export class FixedTableColumn extends React.Component {
       </th>
     )
   }
+}
+
+FixedTableColumn.propTypes = {
+  align: PropTypes.string.isRequired,
+  cell: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func
+  ]).isRequired,
+  col: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  footer: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func
+  ]),
+  width: PropTypes.string.isRequired
 }

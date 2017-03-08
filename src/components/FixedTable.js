@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { FixedTableBody } from './FixedTableBody'
 import { FixedTableFooter } from './FixedTableFooter'
 import { FixedTableHeader } from './FixedTableHeader'
@@ -34,4 +34,16 @@ export class FixedTable extends React.Component {
       </div>
     )
   }
+}
+
+FixedTable.propTypes = {
+  children: PropTypes.array.isRequired,
+  data: PropTypes.object,
+  height: PropTypes.number.isRequired,
+  rowCount: PropTypes.number.isRequired,
+  rowHeight: PropTypes.number.isRequired,
+  width: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired
 }
