@@ -17,11 +17,11 @@ export class DataStore {
   }
 
   getObjectAt (index) {
-    return this._data[this._indexMap[index]]
+    index = this._indexMap[index]
+    return this._data[index]
   }
 
   getAll () {
-    if (this._indexMap.length === this._data.length) return this._data
     let data = []
     for (let i = 0; i < this.getSize(); i++) {
       data.push(this.getObjectAt(i))
@@ -37,8 +37,8 @@ export class DataStore {
       if (typeof key === 'object') {
         for (let i = 0; i < key.length; i++) {
           sortVal = 0
-          let valueA = !isNaN(parseFloat(this._data[indexA][key])) ? parseFloat(this._data[indexA][key]) : this._data[indexA][key]
-          let valueB = !isNaN(parseFloat(this._data[indexB][key])) ? parseFloat(this._data[indexB][key]) : this._data[indexB][key]
+          let valueA = !isNaN(parseFloat(this._data[indexA][key[i]])) ? parseFloat(this._data[indexA][key[i]]) : this._data[indexA][key[i]]
+          let valueB = !isNaN(parseFloat(this._data[indexB][key[i]])) ? parseFloat(this._data[indexB][key[i]]) : this._data[indexB][key[i]]
           if (valueA > valueB) {
             sortVal = 1
           }
@@ -52,8 +52,8 @@ export class DataStore {
         }
       } else {
         sortVal = 0
-        let valueA = isNum ? parseFloat(this._data[indexA][key]) : this._data[indexA][key]
-        let valueB = isNum ? parseFloat(this._data[indexB][key]) : this._data[indexB][key]
+        let valueA = !isNaN(parseFloat(this._data[indexA][key])) ? parseFloat(this._data[indexA][key]) : this._data[indexA][key]
+        let valueB = !isNaN(parseFloat(this._data[indexB][key])) ? parseFloat(this._data[indexB][key]) : this._data[indexB][key]
         if (valueA > valueB) {
           sortVal = 1
         }
