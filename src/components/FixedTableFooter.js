@@ -6,6 +6,7 @@ export class FixedTableFooter extends React.Component {
 
     let i = 0
     this.props.cols.forEach(col => {
+      let Cell = null
       let footerStyle = {
         backgroundColor: '#f6f7f8',
         backgroundImage: 'linear-gradient(#fff,#efefef)',
@@ -18,10 +19,24 @@ export class FixedTableFooter extends React.Component {
         width: col.props.width
       }
 
-      if (col.props.totalCell) {
-        const Cell = col.props.totalCell
-        const total = (<Cell align={col.props.align} col={col.props.col} data={this.props.data} key={i} style={footerStyle} width={col.props.width} />)
-        totals.push(total)
+      if (col.props.footer) {
+        let footerProps = {
+          align: col.props.align,
+          col: col.props.col,
+          key: i,
+          style: footerStyle,
+          width: col.props.width,
+          ...col.props.footer.props
+        }
+
+        if (React.isValidElement(col.props.footer)) {
+          Cell = React.cloneElement(col.props.footer, footerProps)
+        } else {
+          footerProps.data = this.props.data
+          Cell = col.props.footer(footerProps)
+        }
+
+        totals.push(Cell)
       } else {
         totals.push(<td key={i} style={footerStyle}>{''}</td>)
       }
