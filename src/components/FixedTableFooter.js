@@ -54,5 +54,8 @@ export class FixedTableFooter extends React.Component {
 FixedTableFooter.propTypes = {
   cols: PropTypes.array,
   data: PropTypes.object,
-  height: PropTypes.string.isRequired
+  height: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired
 }

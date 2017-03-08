@@ -26,7 +26,6 @@ FixedTableColumn.propTypes = {
     PropTypes.func
   ]).isRequired,
   col: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
   footer: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.func

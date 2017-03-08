@@ -23,5 +23,8 @@ export class FixedTableHeader extends React.Component {
 }
 
 FixedTableHeader.propTypes = {
-  height: PropTypes.string.isRequired
+  height: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired
 }
